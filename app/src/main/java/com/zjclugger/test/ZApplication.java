@@ -1,22 +1,30 @@
 package com.zjclugger.test;
 
 import android.app.Application;
+
 import cn.jpush.android.api.JPushInterface;
 
 /**
  * For developer startup JPush SDK
- * 
+ * <p>
  * 一般建议在自定义 Application 类里初始化。也可以在主 Activity 里。
  */
 public class ZApplication extends Application {
     private static final String TAG = "KZJC";
 
     @Override
-    public void onCreate() {    	     
-    	 Logger.d(TAG, "[ExampleApplication] onCreate");
-         super.onCreate();
+    public void onCreate() {
+        Logger.d(TAG, "[ExampleApplication] onCreate");
+        super.onCreate();
 
-         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
-         JPushInterface.init(this);     		// 初始化 JPush
+        JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);            // 初始化 JPush
+        ShortcutBadgerUtils.resetCount(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ShortcutBadgerUtils.resetCount(this);
     }
 }
