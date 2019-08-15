@@ -14,7 +14,7 @@ public class ZApplication extends Application {
 
     @Override
     public void onCreate() {
-        Logger.d(TAG, "[ExampleApplication] onCreate");
+        Logger.d(TAG, "[ZApplication] onCreate");
         super.onCreate();
 
         JPushInterface.setDebugMode(true);    // 设置开启日志,发布时请关闭日志

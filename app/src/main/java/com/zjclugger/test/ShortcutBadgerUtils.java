@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
+import static cn.jpush.android.api.JPushInterface.clearAllNotifications;
+
 public class ShortcutBadgerUtils {
     private final static String TAG = "KINGZJCS";
     private final static String KEY_BADGER_COUNT = "badger_count";
@@ -36,23 +38,13 @@ public class ShortcutBadgerUtils {
     }
 
     /**
-     * 一次清除全部消息数
-     *
-     * @param context
-     * @param notification
-     */
-    public static void clearBadgerCount(Context context, Notification notification) {
-        PreferencesUtil.putInt(context, KEY_BADGER_COUNT, 0);
-        setShortcutBadger(context, notification);
-    }
-
-    /**
      * 应用退出时，消息数置为0
      *
      * @param context
      */
     public static void resetCount(Context context) {
         PreferencesUtil.putInt(context, KEY_BADGER_COUNT, 0);
+        clearAllNotifications(context);
         ShortcutBadger.removeCount(context);
     }
 
@@ -78,7 +70,7 @@ public class ShortcutBadgerUtils {
     }
 
     /**
-     * 当然消息数
+     * 消息数
      *
      * @param context
      * @return

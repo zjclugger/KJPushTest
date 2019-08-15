@@ -5,14 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ZApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:label="@string/app_name"
-        android:name=".ZApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +22,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.JService"
+        <activity
+            android:name=".MQMessageActivity"
+            android:launchMode="singleInstance" />
+
+        <service
+            android:name=".service.JService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -32,7 +39,7 @@
         <receiver
             android:name=".MyJPushMessageReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="com.zjclugger.test" />
@@ -54,6 +61,7 @@
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <action android:name="cn.jpush.android.intent.CONNECTION" />
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+
                 <category android:name="com.zjclugger.test" />
             </intent-filter>
         </receiver>
@@ -62,7 +70,9 @@
         <!-- For test only 测试设置 -->
         <activity android:name=".SettingActivity"></activity>
         <!-- For test only 测试状态通知栏，需要打开的Activity -->
-        <activity android:name=".TestActivity" android:exported="false">
+        <activity
+            android:name=".TestActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="jpush.testAction" />
                 <category android:name="jpush.testCategory" />

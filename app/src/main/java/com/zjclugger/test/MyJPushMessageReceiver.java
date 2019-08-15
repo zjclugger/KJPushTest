@@ -2,6 +2,7 @@ package com.zjclugger.test;
 
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import cn.jpush.android.api.CustomMessage;
@@ -41,8 +42,14 @@ public class MyJPushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageOpened(Context context, NotificationMessage notificationMessage) {
         super.onNotifyMessageOpened(context, notificationMessage);
-        ShortcutBadgerUtils.decrementBadgerCount(context, mNotification);
         Log.d(TAG, "[通知-被点击]=" + notificationMessage.msgId + ",count=" + getBadgerCount(context));
+        //TODO:设置跳转操作【点击通知时要执行的操作】
+        Intent messageIntent = new Intent(context, MQMessageActivity.class);
+        messageIntent.putExtra(MQConstants.KEY_FROM_NOTIFICATION, true);
+        messageIntent.putExtra(MQConstants.KEY_BADGER_COUNT, ShortcutBadgerUtils.getBadgerCount(context));
+        messageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(messageIntent);
+        ShortcutBadgerUtils.decrementBadgerCount(context, mNotification);
     }
 
     @Override

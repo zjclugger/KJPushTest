@@ -78,6 +78,16 @@ public class MainActivity extends InstrumentedActivity implements OnClickListene
         mSetting.setOnClickListener(this);
 
         msgText = (EditText) findViewById(R.id.msg_rec);
+
+        findViewById(R.id.view_message).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MQMessageActivity.class);
+                intent.putExtra(MQConstants.KEY_BADGER_COUNT,
+                        ShortcutBadgerUtils.getBadgerCount(MainActivity.this));
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -114,6 +124,11 @@ public class MainActivity extends InstrumentedActivity implements OnClickListene
         JPushInterface.init(getApplicationContext());
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
     @Override
     protected void onResume() {
@@ -165,14 +180,14 @@ public class MainActivity extends InstrumentedActivity implements OnClickListene
                     if (!ExampleUtil.isEmpty(extras)) {
                         showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
                     }
-                    setCostomMsg(showMsg.toString());
+                    setCustomMessage(showMsg.toString());
                 }
             } catch (Exception e) {
             }
         }
     }
 
-    private void setCostomMsg(String msg) {
+    private void setCustomMessage(String msg) {
         if (null != msgText) {
             msgText.setText(msg);
             msgText.setVisibility(View.VISIBLE);
